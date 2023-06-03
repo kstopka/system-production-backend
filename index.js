@@ -13,8 +13,6 @@ app.post("/api/add_material", (req, res) => {
   console.log("add_material");
   const { nameMaterial, priceMaterial, unitMaterial } = req.body;
 
-  console.log(nameMaterial, priceMaterial, unitMaterial);
-
   db.query(
     "INSERT INTO `db.material` (nameMaterial, priceMaterial, unitMaterial) VALUES (?,?,?)",
     [nameMaterial, priceMaterial, unitMaterial],
@@ -29,6 +27,7 @@ app.post("/api/add_material", (req, res) => {
 
 // Route to get all material
 app.get("/api/get_material", (req, res) => {
+  console.log("get_material");
   db.query("SELECT * FROM `db.material`", (err, result) => {
     if (err) {
       console.log(err);
@@ -36,6 +35,48 @@ app.get("/api/get_material", (req, res) => {
     res.send(result);
   });
 });
+
+//Route to add new parts
+app.post("/api/add_parts", (req, res) => {
+  console.log("add_parts");
+  const {
+    nameParts,
+    materialParts,
+    quintityMagazinParts,
+    quantityOrderParts,
+    quantityOccupiedParts,
+  } = req.body;
+
+  db.query(
+    "INSERT INTO `db.parts` (nameParts, materialParts, quintityMagazinParts, quantityOrderParts, quantityOccupiedParts) VALUES (?,?,?,?,?)",
+    [
+      nameParts,
+      materialParts,
+      quintityMagazinParts,
+      quantityOrderParts,
+      quantityOccupiedParts,
+    ],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
+// Route to get all parts
+app.get("/api/get_parts", (req, res) => {
+  console.log("get_parts");
+  db.query("SELECT * FROM `db.parts`", (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    res.send(result);
+  });
+});
+
+//EXAMPLES
 
 // Route to get one post
 app.get("/api/getFromId/:id", (req, res) => {
