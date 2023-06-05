@@ -76,6 +76,18 @@ app.get("/api/get_parts", (req, res) => {
   });
 });
 
+// Route to delete parts
+
+app.delete("/api/del_parts/:id", (req, res) => {
+  const id = req.params.id;
+  console.log("del_parts");
+  db.query("DELETE FROM `db.parts` WHERE idParts= ?", id, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
 //EXAMPLES
 
 // Route to get one post
