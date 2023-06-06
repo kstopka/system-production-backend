@@ -88,6 +88,38 @@ app.delete("/api/del_parts/:id", (req, res) => {
   });
 });
 
+// Route for update part
+app.post("/api/update_part/:id", (req, res) => {
+  console.log("update_part");
+  const {
+    nameParts,
+    materialParts,
+    quintityMagazinParts,
+    quantityOrderParts,
+    quantityOccupiedParts,
+  } = req.body;
+
+  const id = req.params.id;
+
+  db.query(
+    "UPDATE `db.parts` SET `nameParts`= ? ,`materialParts`= ?,`quintityMagazinParts`= ?,`quantityOrderParts`= ?,`quantityOccupiedParts`= ? WHERE idParts = ?",
+    [
+      nameParts,
+      materialParts,
+      quintityMagazinParts,
+      quantityOrderParts,
+      quantityOccupiedParts,
+      id,
+    ],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(result);
+    }
+  );
+});
+
 //EXAMPLES
 
 // Route to get one post
